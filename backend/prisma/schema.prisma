@@ -1,0 +1,171 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  SISWA
+  GURU
+}
+
+model User {
+  id                String   @id @default(uuid())
+  fullname          String
+  email             String   @unique
+  password          String   @default("")
+  photo             String   @default("")
+  is_email_verified Boolean  @default(false)
+  token             String   @unique
+  provider          String   @default("email")
+  role              UserRole @default(SISWA)
+
+  guru  Guru?
+  siswa Siswa?
+}
+
+model Guru {
+  id  String @id @default(uuid())
+  nip String
+
+  id_user String @unique
+  user    User   @relation(fields: [id_user], references: [id], onDelete: Cascade)
+
+  mengajar Mengajar[]
+
+  @@index([id_user])
+}
+
+model Siswa {
+  id  String @id @default(uuid())
+  nis String
+
+  id_user String @unique
+  user    User   @relation(fields: [id_user], references: [id], onDelete: Cascade)
+
+  id_kelas String
+  kelas    Kelas  @relation(fields: [id_kelas], references: [id], onDelete: Cascade)
+
+  hasil Hasil[]
+
+  @@index([id_user, id_kelas])
+}
+
+model Jurusan {
+  id   String @id @default(uuid())
+  nama String
+
+  kelas Kelas[]
+}
+
+model Kelas {
+  id   String @id @default(uuid())
+  nama String
+
+  id_jurusan String
+  jurusan    Jurusan @relation(fields: [id_jurusan], references: [id], onDelete: Cascade)
+
+  siswa    Siswa[]
+  mengajar Mengajar[]
+
+  @@index([id_jurusan])
+}
+
+model MataPelajaran {
+  id   String @id @default(uuid())
+  nama String
+
+  mengajar Mengajar[]
+}
+
+model Mengajar {
+  id           String @id @default(uuid())
+  tahun_ajaran String
+
+  id_guru String
+  guru    Guru   @relation(fields: [id_guru], references: [id], onDelete: Cascade)
+
+  id_mata_pelajaran String
+  mata_pelajaran    MataPelajaran @relation(fields: [id_mata_pelajaran], references: [id], onDelete: Cascade)
+
+  id_kelas String
+  kelas    Kelas  @relation(fields: [id_kelas], references: [id], onDelete: Cascade)
+
+  soal Soal[]
+
+  @@index([id_guru, id_mata_pelajaran])
+}
+
+model Soal {
+  id       String @id @default(uuid())
+  semester String
+
+  id_mengajar String
+  mengajar    Mengajar @relation(fields: [id_mengajar], references: [id], onDelete: Cascade)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  tanggal_ujian   DateTime @default(now())
+  mulai_ujian     String   @default("08:00")
+  selesai_ujian   String   @default("17:00")
+  lama_pengerjaan Int      @default(30)
+
+  data  DetailSoal[]
+  hasil Hasil[]
+
+  @@index([id_mengajar])
+}
+
+model DetailSoal {
+  id              String   @id @default(uuid())
+  text            String   @db.Text
+  options         Json
+  correct_answers Json
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  id_soal String
+  soal    Soal   @relation(fields: [id_soal], references: [id], onDelete: Cascade)
+
+  answers Jawaban[]
+}
+
+model Hasil {
+  id       String @id @default(uuid())
+  id_soal  String
+  id_siswa String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  siswa   Siswa     @relation(fields: [id_siswa], references: [id], onDelete: Cascade)
+  soal    Soal      @relation(fields: [id_soal], references: [id], onDelete: Cascade)
+  answers Jawaban[]
+
+  @@index([id_soal, id_siswa])
+}
+
+model Jawaban {
+  id         String  @id @default(uuid())
+  answer     Json
+  is_correct Boolean @default(false)
+
+  id_detail_soal String
+  detail_soal    DetailSoal @relation(fields: [id_detail_soal], references: [id], onDelete: Cascade)
+
+  id_hasil String
+  hasil    Hasil  @relation(fields: [id_hasil], references: [id], onDelete: Cascade)
+
+  @@index([id_detail_soal, id_hasil])
+}
