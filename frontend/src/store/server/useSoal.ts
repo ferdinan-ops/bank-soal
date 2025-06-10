@@ -76,11 +76,11 @@ export const useGetDetailSoal = (id: string, onGuru?: boolean) => {
 
     ...(onGuru
       ? {
-          refetchOnMount: true,
-          refetchOnWindowFocus: true,
-          refetchOnReconnect: true,
-          retry: false,
-          staleTime: 0
+          // refetchOnMount: true,
+          refetchOnWindowFocus: true
+          // refetchOnReconnect: true
+          // retry: false,
+          // staleTime: 0
         }
       : {})
   })
@@ -88,10 +88,6 @@ export const useGetDetailSoal = (id: string, onGuru?: boolean) => {
 
 export const useGetSoalByMengajar = (id: string) => {
   return useQuery(['soal-mengajar', id], async () => await getSoalByMengajarFn(id), {
-    refetchOnMount: true,
-    refetchOnWindowFocus: true,
-    refetchOnReconnect: true,
-    retry: false,
-    staleTime: 0
+    refetchOnMount: true
   })
 }

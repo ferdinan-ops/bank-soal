@@ -1,7 +1,6 @@
 import { GuruType } from './guru.type'
 import { KelasType } from './kelas.type'
 import { MataPelajaranType } from './mata-pelajaran.type'
-import { UserType } from './user.type'
 
 export type DetailSoalType = {
   id: string

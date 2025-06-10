@@ -9,7 +9,7 @@ import { useCreateSoal, useGetDetailSoal, useUpdateSoal } from '@/store/server/u
 import { useTitle } from '@/hooks'
 
 import { cn } from '@/lib/utils'
-import { formatDate, formatDateToInput } from '@/lib/services/time'
+import { formatDate } from '@/lib/services/time'
 import { SoalPayloadType, soalValidation } from '@/lib/validations/soal.validation'
 
 import { BackButton } from '@/components/atoms'
@@ -20,6 +20,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Section } from '@/components/organisms'
 
 export default function GuruSoalCreate() {
   useTitle('Tambah soal')
@@ -27,7 +28,7 @@ export default function GuruSoalCreate() {
   const navigate = useNavigate()
   const { idSoal, id } = useParams<{ idSoal: string; id: string }>()
 
-  const { data: soal, isSuccess } = useGetDetailSoal(idSoal as string, true)
+  const { data: soal, isSuccess, isLoading: isLoadingGet } = useGetDetailSoal(idSoal as string, true)
   const { mutate: createSoal, isLoading } = useCreateSoal()
   const { mutate: updateSoal, isLoading: loadingUpdate } = useUpdateSoal()
 
@@ -40,7 +41,7 @@ export default function GuruSoalCreate() {
     if (isSuccess && idSoal) {
       forms.setValue('semester', soal.semester)
       forms.setValue('lama_pengerjaan', soal.lama_pengerjaan)
-      forms.setValue('tanggal_ujian', formatDateToInput(soal.tanggal_ujian))
+      forms.setValue('tanggal_ujian', new Date(soal.tanggal_ujian))
       forms.setValue('mulai_ujian', soal.mulai_ujian)
       forms.setValue('selesai_ujian', soal.selesai_ujian)
     }
@@ -54,8 +55,7 @@ export default function GuruSoalCreate() {
   const onSubmit = (values: SoalPayloadType) => {
     const data = { ...values, id_mengajar: id }
 
-    const formatDate = new Date(data.tanggal_ujian)
-    const tanggalUjian = formatDate.toISOString()
+    const tanggalUjian = new Date(data.tanggal_ujian)
 
     console.log({ id: idSoal, ...data, tanggal_ujian: tanggalUjian })
 
@@ -68,7 +68,7 @@ export default function GuruSoalCreate() {
   }
 
   return (
-    <section className="mx-auto flex w-full flex-col gap-[10px] px-5 md:w-6/12 md:p-0">
+    <Section className="mx-auto flex w-full flex-col gap-[10px] px-5 md:w-6/12 md:p-0" isLoading={isLoadingGet}>
       <BackButton />
       <div className="flex flex-col">
         <h2 className="mb-2 text-2xl font-bold text-primary dark:text-white md:text-[32px]">
@@ -120,7 +120,7 @@ export default function GuruSoalCreate() {
                           className={cn('text-left', !field.value && 'text-muted-foreground')}
                         >
                           {field.value ? (
-                            formatDate(field.value)
+                            formatDate(field.value.toISOString())
                           ) : (
                             <span className="font-normal">Pilih Tanggal Ujian</span>
                           )}
@@ -183,6 +183,6 @@ export default function GuruSoalCreate() {
           </Button>
         </form>
       </Form>
-    </section>
+    </Section>
   )
 }

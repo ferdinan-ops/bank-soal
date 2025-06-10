@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 export default function GuruSoal() {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
-  const { data: soal, isLoading } = useGetSoalByMengajar(id as string)
+  const { data: soal, isLoading, isFetching } = useGetSoalByMengajar(id as string)
 
   useTitle('Daftar Soal')
 
@@ -33,7 +33,7 @@ export default function GuruSoal() {
   }
 
   return (
-    <Section isLoading={isLoading || isLoadingDelete}>
+    <Section isLoading={isLoading || isLoadingDelete || isFetching}>
       <BackButton />
       <Section.Head
         title={`Daftar Soal${soal && soal?.length > 0 ? `: ${soal?.[0].mengajar.mata_pelajaran.nama}` : ''}`}
