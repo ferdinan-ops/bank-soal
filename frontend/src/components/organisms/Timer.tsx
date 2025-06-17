@@ -18,9 +18,9 @@ interface QuizTimerProps {
 export default function Timer({ actionAfterFinish, timer }: QuizTimerProps) {
   return (
     <React.Fragment>
-      <div className="fixed right-3 top-3 z-50 flex flex-row items-center gap-1 rounded-lg border bg-white p-3 shadow-sm md:left-auto md:right-12 md:top-[148px] md:translate-x-0 md:flex-col md:p-6">
+      <div className="fixed right-10 top-32 z-50 flex flex-row items-center gap-1 rounded-lg border bg-white p-3 shadow-sm md:left-auto md:right-12 md:top-[148px] md:translate-x-0 md:flex-col md:p-6">
         <p className="text-xs font-medium md:text-sm">
-          Lama <span className="hidden md:inline">pengerjaan</span>:{' '}
+          <span className='md:hidden'>Waktu</span> <span className="hidden md:inline">Lama pengerjaan</span>:{' '}
         </p>
         <p className="text-xs font-bold text-green-600 md:text-2xl">{formatTimeForTimer(timer.timeLeft)}</p>
       </div>

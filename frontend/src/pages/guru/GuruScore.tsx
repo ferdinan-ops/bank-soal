@@ -46,7 +46,7 @@ export default function GuruScore() {
               <Section.Cell>{item.siswa?.user?.fullname}</Section.Cell>
               <Section.Cell>{item.siswa?.kelas.jurusan.nama}</Section.Cell>
               <Section.Cell>{item.siswa?.kelas.nama}</Section.Cell>
-              <Section.Cell>{getNilai(getCorrectAnswer(item.answers), item.answers.length)}</Section.Cell>
+              <Section.Cell>{getNilai(getCorrectAnswer(item.jawaban), item.jawaban.length)}</Section.Cell>
               <Section.Cell>{formatDate(item.created_at)}</Section.Cell>
             </Section.Row>
           ))}

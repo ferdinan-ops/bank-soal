@@ -36,7 +36,7 @@ export default function Login() {
 
   return (
     <section className="mx-auto flex min-h-screen w-full flex-col justify-center gap-[10px] px-5 py-8 md:w-[440px] md:p-0">
-      <Brand className="static left-6 top-6 mb-5 flex-col text-primary md:absolute md:mb-0 md:flex-row" />
+      <Brand className="static left-6 top-6 mb-5 flex-col text-primary md:absolute md:mb-0 md:flex-row md:text-left text-center" />
       <div className="flex flex-col">
         <h2 className="mb-2 text-2xl font-bold text-primary dark:text-white md:text-[32px]">Masuk</h2>
         <p className="text-[13px] font-medium text-zinc-500 md:text-sm">Selamat datang, Silakan masukkan detail Anda</p>

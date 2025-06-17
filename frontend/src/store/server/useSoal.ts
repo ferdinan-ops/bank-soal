@@ -23,7 +23,7 @@ export const useCreateSoal = () => {
       handleOnError(error)
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries('soal')
+      queryClient.invalidateQueries('soal-mengajar')
       toast({
         title: 'Proses berhasil!!',
         description: data?.data?.message as string

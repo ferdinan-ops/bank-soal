@@ -1,4 +1,5 @@
 import {
+  HiBars3,
   HiOutlineAcademicCap,
   HiOutlineArrowRightOnRectangle,
   HiOutlineBeaker,
@@ -75,14 +76,14 @@ export default function Header({ className }: HeaderProps) {
               onClick={() => setIsOpen(!isOpen)}
               className={cn(
                 'cursor-pointer rounded-full bg-white/10 text-white hover:bg-white/5 xl:rounded-lg xl:px-3.5 xl:py-2',
-                'bg-zinc-100 text-primary hover:bg-zinc-200'
+                'xl:bg-zinc-100 text-primary xl:hover:bg-zinc-200'
               )}
             >
               <HiOutlineChevronDown className="hidden text-lg text-font lg:block" />
             </ProfileBox>
 
             <FloatBox isOpen={isOpen}>
-              <ProfileBox user={user} className="border-b border-zinc-200 pb-4 text-primary" />
+              <ProfileBox noBar user={user} className="border-b border-zinc-200 pb-4 text-primary" />
 
               {links
                 .filter((link) => link.type === user.role.toLocaleLowerCase())
@@ -110,12 +111,14 @@ interface ProfileBoxProps {
   user: UserType
   className?: string
   isHidden?: boolean
+  noBar?: boolean
 }
 
-function ProfileBox({ user, onClick, children, className, isHidden }: ProfileBoxProps) {
+function ProfileBox({ user, onClick, children, className, isHidden, noBar }: ProfileBoxProps) {
   return (
     <div className={cn('flex items-center gap-3.5', className)} onClick={() => onClick && onClick()}>
       {/* <Image src={user?.photo} alt={user?.fullname} className="h-10 w-10 rounded-full" /> */}
+      {!noBar && <HiBars3 className="h-8 w-8 xl:hidden" />}
       <div className={cn('flex flex-col', isHidden && 'hidden lg:flex')}>
         <h3 className="truncate text-sm font-semibold text-font">{user?.fullname}</h3>
         <p className="truncate text-xs text-font/50">{user?.email}</p>

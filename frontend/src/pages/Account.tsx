@@ -53,14 +53,14 @@ export default function Account() {
   }
 
   return (
-    <section className="flex flex-col px-5 xl:mx-auto xl:w-6/12 xl:px-0">
+    <section className="flex flex-col xl:mx-auto xl:w-6/12 xl:px-0">
       <div className="flex flex-col">
         <h2 className="mb-2 text-2xl font-bold text-primary dark:text-white md:text-[32px]">Pengaturan Akun</h2>
         <p className="text-[13px] font-medium text-zinc-500 md:text-sm">
           Pada halaman ini Anda bisa mengubah data dan pengaturan dari akun yang Anda miliki ini.
         </p>
       </div>
-      <div className="mt-10 border-b pb-10">
+      <div className="mt-10 border-b pb-5 xl:pb-10">
         {/* <UploadPhoto user={user as UserType} /> */}
         <Form {...forms}>
           <form onSubmit={forms.handleSubmit(onSubmit)} className="col-span-1 flex w-full flex-col gap-5">
@@ -96,7 +96,7 @@ export default function Account() {
           </form>
         </Form>
       </div>
-      <div className="flex w-fit gap-3 pt-10">
+      <div className="flex xl:w-fit gap-3 pt-4 xl:pt-10 xl:flex-row flex-col">
         <Button
           variant="outline"
           onClick={() => navigate('/me/reset-password')}
@@ -107,7 +107,7 @@ export default function Account() {
         </Button>
         <EditEmail email={user?.email as string} className="flex-1" />
         <Alert title={alertConf.title} desc={alertConf.desc} btnText={alertConf.btnTxt} action={handleLogout}>
-          <button className="relative inline-flex h-10 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-red-500 px-5 text-sm font-medium text-zinc-50 ring-offset-white transition-colors hover:bg-red-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-red-900 dark:text-zinc-50 dark:ring-offset-zinc-950 dark:hover:bg-red-900/90 dark:focus-visible:ring-zinc-300">
+          <button className="relative inline-flex h-10 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-red-500 px-5 text-sm font-medium text-zinc-50 ring-offset-white transition-colors hover:bg-red-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-red-900 dark:text-zinc-50 dark:ring-offset-zinc-950 dark:hover:bg-red-900/90 dark:focus-visible:ring-zinc-300 py-2.5">
             <HiOutlineArrowLeftOnRectangle className="text-xl" />
             Keluar dari aplikasi
           </button>

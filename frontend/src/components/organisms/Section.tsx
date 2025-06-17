@@ -30,7 +30,7 @@ interface HeadProps extends SectionProps {
 
 function Head({ className, children, title, desc }: HeadProps) {
   return (
-    <div className={cn('flex items-center justify-between', className)}>
+    <div className={cn('flex md:items-center md:justify-between flex-col md:flex-row gap-5 md:gap-0', className)}>
       <div className="flex flex-col">
         <h2 className="mb-2 text-2xl font-bold text-primary dark:text-white md:text-[32px]">{title}</h2>
         <p className="text-[13px] font-medium text-zinc-500 md:text-sm">{desc}</p>

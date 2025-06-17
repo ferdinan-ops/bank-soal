@@ -23,6 +23,7 @@ export default function Answer() {
   const { data: detailSoal, isSuccess } = useGetDetailSoal(id as string)
   const { data: soal, isSuccess: successGet } = useGetAllDetailSoalForUser(id as string)
   const { data: answers } = useGetAnswers(id as string, undefined, user.role === UserRole.SISWA)
+  console.log('answers', answers)
 
   const { mutate: createAnswer, isLoading } = useCreateAnswers()
 
@@ -66,23 +67,26 @@ export default function Answer() {
             />
           </React.Fragment>
         )}
-      <article className="flex flex-col gap-3 rounded-xl border border-primary/30 p-8">
-        <div className="flex items-center justify-between border-b border-primary/30 pb-5">
-          <Brand imageClassName="xl:w-9 w-7 mb-1.5" className="gap-3 text-lg font-bold xl:gap-4 xl:text-xl" />
+      <article className="flex flex-col gap-3 rounded-xl border border-primary/30 p-4 xl:p-8">
+        <div className="flex items-center justify-between border-b border-primary/30 pb-3 xl:pb-5">
+          <Brand imageClassName="xl:w-9 w-7 mb-1.5 w-7 h-5" className="gap-1 text-sm font-bold xl:gap-4 xl:text-xl" />
           <div className="flex flex-col">
-            <span className="-mb-1 text-[13px] font-semibold text-primary">Lama pengerjaan:</span>
-            <span className="text-right text-sm font-bold text-primary">{detailSoal.lama_pengerjaan} menit</span>
+            <span className="-mb-1 text-[11px] xl:text-[13px] font-semibold text-primary">Lama pengerjaan:</span>
+            <span className="text-right text-xs xl:text-sm font-bold text-primary">{detailSoal.lama_pengerjaan} menit</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 pt-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 pt-1 xl:pt-4">
           <table>
-            <tbody>
+            <tbody className="xl:text-base text-[13px]">
               <Info title="Mata Pelajaran" content={detailSoal.mengajar.mata_pelajaran.nama} />
               <Info title="Jurusan" content={detailSoal.mengajar.kelas.jurusan.nama} />
               <Info title="Kelas" content={detailSoal.mengajar.kelas.nama} />
+              <Info title="Semester" content={detailSoal.semester} className="xl:hidden" />
+              <Info title="Tahun Ajaran" content={detailSoal.mengajar.tahun_ajaran} className="xl:hidden" />
+              <Info title="Pengajar" content={detailSoal.mengajar.guru.user.fullname} className="xl:hidden" />
             </tbody>
           </table>
-          <table>
+          <table className="hidden xl:block">
             <tbody>
               <Info title="Semester" content={detailSoal.semester} />
               <Info title="Tahun Ajaran" content={detailSoal.mengajar.tahun_ajaran} />

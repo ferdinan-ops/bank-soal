@@ -15,7 +15,7 @@ interface AnswerFormProps {
 export default function AnswerForm({ name, question, formControl }: AnswerFormProps) {
   return (
     <article
-      className="relative mt-10 overflow-hidden rounded-xl border px-4 py-3 dark:text-primary md:px-6 md:py-5"
+      className="relative mt-5 xl:mt-10 overflow-hidden rounded-xl border px-4 py-3 dark:text-primary md:px-6 md:py-5"
       key={question.id}
     >
       <div className="absolute bottom-0 left-0 top-0 w-1 bg-primary" />

@@ -11,7 +11,7 @@ import { UserRole } from '@/lib/constant'
 import { DetailSoalType } from '@/lib/types/soal.type'
 import { getStartAndFinish } from '@/lib/services/time'
 
-import { Badge, Loading, Pagination, Search } from '@/components/atoms'
+import { Badge, Loading, Search } from '@/components/atoms'
 import { Info } from '@/components/organisms'
 
 import { Button } from '@/components/ui/button'
@@ -182,14 +182,14 @@ export default function Home() {
           <p className="font-semibold italic text-primary/80">Belum ada soal</p>
         )}
       </div>
-      {soal?.meta && soal?.meta?.total > 9 ? (
+      {/* {soal?.meta && soal?.meta?.total > 9 ? (
         <Pagination
           pageSize={soal?.meta.limit as number}
           totalCount={soal?.meta.total as number}
           currentPage={params.page !== '' ? parseInt(params.page) : 1}
           onPageChange={(page) => createParam({ key: 'page', value: page.toString() })}
         />
-      ) : null}
+      ) : null} */}
     </section>
   )
 }

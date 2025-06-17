@@ -18,7 +18,7 @@ export type ScoreType = {
   id: string
   id_user: string
   id_soal: string
-  answers: AnswerType[]
+  jawaban: AnswerType[]
   soal: Detail
   user: UserType
   created_at: string

@@ -8,7 +8,6 @@ import { useGetDetailSoal } from '@/store/server/useSoal'
 
 import { cn } from '@/lib/utils'
 import { UserRole } from '@/lib/constant'
-import { formatDate } from '@/lib/services/time'
 import { AnswerType } from '@/lib/types/jawaban.type'
 
 import { Info } from '@/components/organisms'
@@ -38,32 +37,31 @@ export default function Result() {
     navigate('/')
   }
 
-  if (!isSuccess || !successAnswer) {
-    return <Loading />
-  }
-
-  console.log({ answers })
+  if (!isSuccess || !successAnswer) return <Loading />
 
   return (
     <section className="mx-auto flex w-full flex-col md:w-10/12">
-      <article className="flex flex-col gap-3 rounded-xl border border-primary/30 p-8">
-        <div className="flex items-center justify-between border-b border-primary/30 pb-5">
-          <Brand imageClassName="xl:w-9 w-7 mb-1.5" className="gap-3 text-lg font-bold xl:gap-4 xl:text-xl" />
+      <article className="flex flex-col gap-3 rounded-xl border border-primary/30 p-4 xl:p-8">
+        <div className="flex items-center justify-between border-b border-primary/30 pb-3 xl:pb-5">
+          <Brand imageClassName="xl:w-9 w-7 mb-1.5 w-7 h-5" className="gap-1 text-sm font-bold xl:gap-4 xl:text-xl" />
           <div className="flex flex-col">
-            <span className="-mb-1 text-[13px] font-semibold text-primary">Diunggah:</span>
-            <span className="text-sm font-bold text-primary">{formatDate(detailSoal.created_at)}</span>
+            <span className="-mb-1 text-[11px] xl:text-[13px] font-semibold text-primary">Lama pengerjaan:</span>
+            <span className="text-right text-xs xl:text-sm font-bold text-primary">{detailSoal.lama_pengerjaan} menit</span>
           </div>
         </div>
-        <div className="grid grid-cols-2 pt-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 pt-1 xl:pt-4">
           <table>
-            <tbody>
+            <tbody className='xl:text-base text-[13px]'>
               <Info title="Mata Pelajaran" content={detailSoal.mengajar.mata_pelajaran.nama} />
               <Info title="Jurusan" content={detailSoal.mengajar.kelas.jurusan.nama} />
               <Info title="Kelas" content={detailSoal.mengajar.kelas.nama} />
+              <Info title="Semester" content={detailSoal.semester} className='xl:hidden' />
+              <Info title="Tahun Ajaran" content={detailSoal.mengajar.tahun_ajaran} className='xl:hidden' />
+              <Info title="Pengajar" content={detailSoal.mengajar.guru.user.fullname} className='xl:hidden' />
             </tbody>
           </table>
           <table>
-            <tbody>
+            <tbody className='hidden xl:block'>
               <Info title="Semester" content={detailSoal.semester} />
               <Info title="Tahun Ajaran" content={detailSoal.mengajar.tahun_ajaran} />
               <Info title="Pengajar" content={detailSoal.mengajar.guru.user.fullname} />
@@ -72,15 +70,17 @@ export default function Result() {
         </div>
       </article>
 
-      <article
+     {answers.length > 0 && (
+       <article
         className={cn(
           'mx-auto mt-8 flex w-fit min-w-20 flex-col items-center justify-center rounded-md bg-green-500 p-3 text-white',
-          getNilai(getCorrectAnswer(answers), answers.length) < 50 && 'bg-red-500'
+          getNilai(getCorrectAnswer(answers || []), answers.length) < 50 && 'bg-red-500'
         )}
       >
         <span className="text-sm font-medium">Nilai</span>
         <h3 className="text-4xl font-bold">{getNilai(getCorrectAnswer(answers), answers.length)}</h3>
       </article>
+     )}
 
       {answers.map((item) => (
         <article className="flex flex-col" key={item.id}>
