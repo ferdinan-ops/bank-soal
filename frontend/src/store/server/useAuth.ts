@@ -24,7 +24,7 @@ export const useRegister = () => {
     onSuccess: () => {
       toast({
         title: 'Akun anda berhasil terdaftar',
-        description: 'Silahkan cek email anda untuk melakukan verifikasi'
+        description: 'Silahkan masuk menggunakan email dan password yang telah Anda daftarkan'
       })
     }
   })
