@@ -49,9 +49,7 @@ export default function Answer() {
 
   return (
     <section className="relative mx-auto flex w-full flex-col md:w-10/12">
-      {user.role === UserRole.SISWA &&
-        (!answers || answers?.length === 0) &&
-        new Date() > new Date(detailSoal?.tanggal_ujian) && (
+      {user.role === UserRole.SISWA && (!answers || answers?.length === 0) && (
           <React.Fragment>
             <Timer
               timer={{ timeLeft, isFinished, setIsFinished, time: detailSoal?.lama_pengerjaan ?? 15 }}
