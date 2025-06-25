@@ -37,7 +37,7 @@ export default function Register() {
     register(values, {
       onSuccess: () => {
         forms.reset(registerDefaultValues)
-        navigate('/verify')
+        navigate('/login')
       }
     })
   }
